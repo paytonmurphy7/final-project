@@ -3,6 +3,8 @@ import CharacterList from "./CharacterList.jsx";
 import CharacterForm from "./CharacterForm.jsx";
 import ChartView from "./ChartView.jsx";
 import { getCharacters, getAnime, getPersonalities } from "../api.js";
+import { getToken } from "../tokenStorage";
+
 
 export default function Homepage({ username }) {
   const [characters, setCharacters] = useState([]);
@@ -10,6 +12,7 @@ export default function Homepage({ username }) {
   const [personalities, setPersonalities] = useState([]);
   const [mode, setMode] = useState("list");
   const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const token = getToken();
 
   const [search, setSearch] = useState("");
   const [animeFilter, setAnimeFilter] = useState("");
@@ -214,12 +217,19 @@ export default function Homepage({ username }) {
             </select>
           </div>
 
-          <button
-            onClick={handleCreate}
-            className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700"
-          >
-            Add Character
-          </button>
+{token ? (
+  <button
+    onClick={handleCreate}
+    className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700"
+  >
+    Add Character
+  </button>
+) : (
+  <p className="text-sm text-slate-500 mt-2">
+    Log in to add characters.
+  </p>
+)}
+
         </aside>
 
         <section className="flex-1">

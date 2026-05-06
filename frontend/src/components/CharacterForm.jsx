@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createCharacter, updateCharacter, deleteCharacter } from "../api.js";
+import { getToken } from "../tokenStorage";
 
 export default function CharacterForm({
   initialItem = null,
@@ -8,27 +9,49 @@ export default function CharacterForm({
   onSave,
   onCancel,
 }) {
+  // Clean initialItem so edit mode uses IDs instead of nested objects
+  const cleanedItem = initialItem
+    ? {
+        ...initialItem,
+        anime: initialItem.anime?.id || "",
+        personality: initialItem.personality?.id || "",
+      }
+    : null;
+
   const [formData, setFormData] = useState(
-    initialItem || {
+    cleanedItem || {
       name: "",
       anime: "",
       personality: "",
       age: "",
-      power: "",
       description: "",
-      image: "",
+      image_url: "",
     }
   );
 
+  // ⭐ Convert anime, personality, and age to integers
   function handleChange(e) {
+    const { name, value } = e.target;
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]:
+        name === "anime" ||
+        name === "personality" ||
+        name === "age"
+          ? Number(value)
+          : value,
     });
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    const token = getToken();
+    if (!token) {
+      alert("You must be logged in to add or edit characters.");
+      return;
+    }
 
     if (initialItem) {
       await updateCharacter(initialItem.id, formData);
@@ -40,6 +63,12 @@ export default function CharacterForm({
   }
 
   async function handleDelete() {
+    const token = getToken();
+    if (!token) {
+      alert("You must be logged in to delete characters.");
+      return;
+    }
+
     if (initialItem) {
       await deleteCharacter(initialItem.id);
       onSave();
@@ -61,8 +90,8 @@ export default function CharacterForm({
           </label>
           <input
             type="text"
-            name="image"
-            value={formData.image}
+            name="image_url"
+            value={formData.image_url}
             onChange={handleChange}
             className="w-full px-4 py-2 rounded-lg border border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-400"
             placeholder="https://example.com/image.jpg"
@@ -96,7 +125,7 @@ export default function CharacterForm({
           >
             <option value="">Select Anime</option>
             {animeList.map((a) => (
-              <option key={a.id} value={a.title}>
+              <option key={a.id} value={a.id}>
                 {a.title}
               </option>
             ))}
@@ -116,7 +145,7 @@ export default function CharacterForm({
           >
             <option value="">Select Personality</option>
             {personalities.map((p) => (
-              <option key={p.id} value={p.name}>
+              <option key={p.id} value={p.id}>
                 {p.name}
               </option>
             ))}
@@ -131,19 +160,6 @@ export default function CharacterForm({
             type="number"
             name="age"
             value={formData.age}
-            onChange={handleChange}
-            className="w-full px-4 py-2 rounded-lg border border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-400"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-1">
-            Power / Ability
-          </label>
-          <input
-            type="text"
-            name="power"
-            value={formData.power}
             onChange={handleChange}
             className="w-full px-4 py-2 rounded-lg border border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-400"
           />

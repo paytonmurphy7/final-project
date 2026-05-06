@@ -65,17 +65,9 @@ export function deleteCharacter(id) {
   });
 }
 
-// -----------------------------
-// ANIME (supporting resource)
-// -----------------------------
-
 export function getAnime() {
   return sendRequest("/animes", { method: "GET" });
 }
-
-// -----------------------------
-// PERSONALITIES (supporting resource)
-// -----------------------------
 
 export function getPersonalities() {
   return sendRequest("/personalities", { method: "GET" });
