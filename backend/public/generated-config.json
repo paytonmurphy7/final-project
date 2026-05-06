@@ -1,0 +1,317 @@
+{
+  "meta": {
+    "configPath": "C:\\Users\\simsh\\Documents\\csci344\\final-project\\backend\\api.config.yaml",
+    "generatedAt": "2026-05-06T06:15:11.202Z",
+    "seedDir": "data\\sample-data"
+  },
+  "userResource": {
+    "type": "User",
+    "tableName": "users",
+    "fields": [
+      {
+        "name": "role",
+        "type": "string",
+        "storageType": "string",
+        "required": true,
+        "default": "user",
+        "choices": [
+          "user",
+          "admin"
+        ],
+        "relation": null,
+        "query": {
+          "param": "role",
+          "op": "eq"
+        }
+      }
+    ]
+  },
+  "resources": [
+    {
+      "type": "Personality",
+      "tableName": "personalities",
+      "fileBase": "personalities",
+      "path": "/personalities",
+      "operations": [
+        "list",
+        "retrieve",
+        "create",
+        "update",
+        "delete"
+      ],
+      "shareable": false,
+      "ownershipEnabled": true,
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "storageType": "string",
+          "required": true,
+          "relation": null,
+          "query": {
+            "param": "name",
+            "op": "contains"
+          }
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "storageType": "text",
+          "required": false,
+          "relation": null,
+          "query": null
+        }
+      ],
+      "permissions": {
+        "list": "public",
+        "retrieve": "public",
+        "create": "user",
+        "update": "owner",
+        "delete": "owner"
+      },
+      "queryFilters": [
+        {
+          "param": "name",
+          "fieldName": "name",
+          "op": "contains",
+          "type": "string",
+          "storageType": "string",
+          "relation": null,
+          "choices": null
+        },
+        {
+          "param": "owner_id",
+          "fieldName": "owner_id",
+          "op": "eq",
+          "type": "integer",
+          "storageType": "integer",
+          "relation": null
+        }
+      ]
+    },
+    {
+      "type": "Anime",
+      "tableName": "animes",
+      "fileBase": "animes",
+      "path": "/animes",
+      "operations": [
+        "list",
+        "retrieve",
+        "create",
+        "update",
+        "delete"
+      ],
+      "shareable": false,
+      "ownershipEnabled": true,
+      "fields": [
+        {
+          "name": "title",
+          "type": "string",
+          "storageType": "string",
+          "required": true,
+          "relation": null,
+          "query": {
+            "param": "title",
+            "op": "contains"
+          }
+        },
+        {
+          "name": "genre",
+          "type": "string",
+          "storageType": "string",
+          "required": false,
+          "relation": null,
+          "query": {
+            "param": "genre",
+            "op": "contains"
+          }
+        },
+        {
+          "name": "release_year",
+          "type": "integer",
+          "storageType": "integer",
+          "required": false,
+          "relation": null,
+          "query": null
+        }
+      ],
+      "permissions": {
+        "list": "public",
+        "retrieve": "public",
+        "create": "user",
+        "update": "owner",
+        "delete": "owner"
+      },
+      "queryFilters": [
+        {
+          "param": "title",
+          "fieldName": "title",
+          "op": "contains",
+          "type": "string",
+          "storageType": "string",
+          "relation": null,
+          "choices": null
+        },
+        {
+          "param": "genre",
+          "fieldName": "genre",
+          "op": "contains",
+          "type": "string",
+          "storageType": "string",
+          "relation": null,
+          "choices": null
+        },
+        {
+          "param": "owner_id",
+          "fieldName": "owner_id",
+          "op": "eq",
+          "type": "integer",
+          "storageType": "integer",
+          "relation": null
+        }
+      ]
+    },
+    {
+      "type": "Character",
+      "tableName": "characters",
+      "fileBase": "characters",
+      "path": "/characters",
+      "operations": [
+        "list",
+        "retrieve",
+        "create",
+        "update",
+        "delete"
+      ],
+      "shareable": false,
+      "ownershipEnabled": true,
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "storageType": "string",
+          "required": true,
+          "relation": null,
+          "query": {
+            "param": "name",
+            "op": "contains"
+          }
+        },
+        {
+          "name": "image_url",
+          "type": "image_url",
+          "storageType": "image_url",
+          "required": false,
+          "relation": null,
+          "query": {
+            "param": "image_url",
+            "op": "contains"
+          }
+        },
+        {
+          "name": "anime",
+          "type": "Anime",
+          "storageType": "integer",
+          "required": true,
+          "relation": {
+            "resourceType": "Anime",
+            "targetField": "id"
+          },
+          "query": {
+            "param": "anime",
+            "op": "eq"
+          }
+        },
+        {
+          "name": "personality",
+          "type": "Personality",
+          "storageType": "integer",
+          "required": true,
+          "relation": {
+            "resourceType": "Personality",
+            "targetField": "id"
+          },
+          "query": {
+            "param": "personality",
+            "op": "eq"
+          }
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "storageType": "text",
+          "required": false,
+          "relation": null,
+          "query": null
+        },
+        {
+          "name": "age",
+          "type": "integer",
+          "storageType": "integer",
+          "required": false,
+          "relation": null,
+          "query": null
+        }
+      ],
+      "permissions": {
+        "list": "public",
+        "retrieve": "public",
+        "create": "user",
+        "update": "owner",
+        "delete": "owner"
+      },
+      "queryFilters": [
+        {
+          "param": "name",
+          "fieldName": "name",
+          "op": "contains",
+          "type": "string",
+          "storageType": "string",
+          "relation": null,
+          "choices": null
+        },
+        {
+          "param": "image_url",
+          "fieldName": "image_url",
+          "op": "contains",
+          "type": "image_url",
+          "storageType": "image_url",
+          "relation": null,
+          "choices": null
+        },
+        {
+          "param": "anime",
+          "fieldName": "anime",
+          "op": "eq",
+          "type": "Anime",
+          "storageType": "integer",
+          "relation": {
+            "resourceType": "Anime",
+            "targetField": "id"
+          },
+          "choices": null
+        },
+        {
+          "param": "personality",
+          "fieldName": "personality",
+          "op": "eq",
+          "type": "Personality",
+          "storageType": "integer",
+          "relation": {
+            "resourceType": "Personality",
+            "targetField": "id"
+          },
+          "choices": null
+        },
+        {
+          "param": "owner_id",
+          "fieldName": "owner_id",
+          "op": "eq",
+          "type": "integer",
+          "storageType": "integer",
+          "relation": null
+        }
+      ]
+    }
+  ]
+}

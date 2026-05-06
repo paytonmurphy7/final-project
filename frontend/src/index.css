@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add your own global styles below this line. */
+body {
+  @apply bg-slate-50 text-slate-800 font-sans;
+}
+.header-gradient {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+}
+
+@keyframes sparkleTwinkle {
+  0% { transform: rotate(0deg) scale(1); opacity: 1; }
+  50% { transform: rotate(15deg) scale(1.2); opacity: 0.8; }
+  100% { transform: rotate(0deg) scale(1); opacity: 1; }
+}
+
+.sparkle-animate {
+  animation: sparkleTwinkle 2s ease-in-out infinite;
+  animation-delay: 3s;
+}
