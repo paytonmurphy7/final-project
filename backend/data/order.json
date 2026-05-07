@@ -1,0 +1,24 @@
+{
+  "apiVersion": "1",
+  "baseUrlEnv": "API_BASE",
+  "directory": "data\\sample-data",
+  "resources": [
+    {
+      "type": "Anime",
+      "path": "/api/anime",
+      "file": "animes.csv"
+    },
+    {
+      "type": "Personality",
+      "path": "/api/personalities",
+      "file": "personalities.csv"
+    },
+    {
+      "type": "Character",
+      "path": "/api/characters",
+      "file": "characters.csv"
+    }
+  ],
+  "usersFile": "users.csv",
+  "seedUserColumn": "seed_as"
+}
