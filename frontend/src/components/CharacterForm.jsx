@@ -9,7 +9,7 @@ export default function CharacterForm({
   onSave,
   onCancel,
 }) {
-  // Clean initialItem so edit mode uses IDs instead of nested objects
+
   const cleanedItem = initialItem
     ? {
         ...initialItem,
@@ -29,7 +29,20 @@ export default function CharacterForm({
     }
   );
 
-  // ⭐ Convert anime, personality, and age to integers
+  const [imageError, setImageError] = useState(false);
+
+  const blockedHost = (url) => {
+    if (!url) return false;
+    const lower = url.toLowerCase();
+    return (
+      lower.includes("pinterest") ||
+      lower.includes("pinimg") ||
+      lower.includes("instagram") ||
+      lower.includes("fbcdn") ||
+      lower.includes("googleusercontent")
+    );
+  };
+
   function handleChange(e) {
     const { name, value } = e.target;
 
@@ -42,6 +55,10 @@ export default function CharacterForm({
           ? Number(value)
           : value,
     });
+
+    if (name === "image_url") {
+      setImageError(false); 
+    }
   }
 
   async function handleSubmit(e) {
@@ -88,6 +105,7 @@ export default function CharacterForm({
           <label className="block text-sm font-semibold text-slate-700 mb-1">
             Image URL
           </label>
+
           <input
             type="text"
             name="image_url"
@@ -96,6 +114,34 @@ export default function CharacterForm({
             className="w-full px-4 py-2 rounded-lg border border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-400"
             placeholder="https://example.com/image.jpg"
           />
+
+          <p className="text-xs text-slate-500 mt-1">
+            Tip: Use an image URL from Imgur or Imgbb. Pinterest/Instagram links won’t load.
+          </p>
+
+          {blockedHost(formData.image_url) && (
+            <p className="text-xs text-red-500 mt-1">
+              This site blocks image embedding. Try uploading to Imgur instead.
+            </p>
+          )}
+
+          {formData.image_url && !blockedHost(formData.image_url) && (
+            <div className="mt-3">
+              <p className="text-xs text-slate-600 mb-1">Preview:</p>
+              <img
+                src={formData.image_url}
+                alt="Preview"
+                onError={() => setImageError(true)}
+                className="w-40 h-40 object-cover rounded-lg border border-slate-300 shadow"
+              />
+
+              {imageError && (
+                <p className="text-xs text-red-500 mt-1">
+                  Could not load image. Check the URL or try a different host.
+                </p>
+              )}
+            </div>
+          )}
         </div>
 
         <div>
@@ -111,6 +157,7 @@ export default function CharacterForm({
             className="w-full px-4 py-2 rounded-lg border border-slate-300 shadow-sm focus:ring-2 focus:ring-blue-400"
           />
         </div>
+
 
         <div>
           <label className="block text-sm font-semibold text-slate-700 mb-1">
