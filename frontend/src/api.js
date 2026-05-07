@@ -1,7 +1,7 @@
 import { getToken } from "./tokenStorage.js";
 
 export function getApiBaseUrl() {
-  return "https://final-project-backend.onrender.com";
+  return "https://final-project-vdl7.onrender.com";
 }
 
 export async function sendRequest(path, options = {}) {
