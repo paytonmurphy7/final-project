@@ -1,0 +1,201 @@
+{
+  "generatedAt": "2026-05-06T06:15:11.202Z",
+  "builtIns": {
+    "auth": [
+      {
+        "method": "POST",
+        "path": "/auth/register"
+      },
+      {
+        "method": "POST",
+        "path": "/auth/login"
+      },
+      {
+        "method": "GET",
+        "path": "/auth/me"
+      },
+      {
+        "method": "GET",
+        "path": "/auth/users"
+      },
+      {
+        "method": "PATCH",
+        "path": "/auth/users/:id"
+      }
+    ]
+  },
+  "resources": [
+    {
+      "type": "Personality",
+      "path": "/personalities",
+      "shareable": false,
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/personalities",
+          "permissions": "public",
+          "query": [
+            {
+              "name": "name",
+              "field": "name",
+              "op": "contains",
+              "type": "string",
+              "relationType": null
+            },
+            {
+              "name": "owner_id",
+              "field": "owner_id",
+              "op": "eq",
+              "type": "integer",
+              "relationType": null
+            }
+          ]
+        },
+        {
+          "method": "GET",
+          "path": "/personalities/:id",
+          "permissions": "public"
+        },
+        {
+          "method": "POST",
+          "path": "/personalities",
+          "permissions": "user"
+        },
+        {
+          "method": "PATCH",
+          "path": "/personalities/:id",
+          "permissions": "owner"
+        },
+        {
+          "method": "DELETE",
+          "path": "/personalities/:id",
+          "permissions": "owner"
+        }
+      ]
+    },
+    {
+      "type": "Anime",
+      "path": "/animes",
+      "shareable": false,
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/animes",
+          "permissions": "public",
+          "query": [
+            {
+              "name": "title",
+              "field": "title",
+              "op": "contains",
+              "type": "string",
+              "relationType": null
+            },
+            {
+              "name": "genre",
+              "field": "genre",
+              "op": "contains",
+              "type": "string",
+              "relationType": null
+            },
+            {
+              "name": "owner_id",
+              "field": "owner_id",
+              "op": "eq",
+              "type": "integer",
+              "relationType": null
+            }
+          ]
+        },
+        {
+          "method": "GET",
+          "path": "/animes/:id",
+          "permissions": "public"
+        },
+        {
+          "method": "POST",
+          "path": "/animes",
+          "permissions": "user"
+        },
+        {
+          "method": "PATCH",
+          "path": "/animes/:id",
+          "permissions": "owner"
+        },
+        {
+          "method": "DELETE",
+          "path": "/animes/:id",
+          "permissions": "owner"
+        }
+      ]
+    },
+    {
+      "type": "Character",
+      "path": "/characters",
+      "shareable": false,
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/characters",
+          "permissions": "public",
+          "query": [
+            {
+              "name": "name",
+              "field": "name",
+              "op": "contains",
+              "type": "string",
+              "relationType": null
+            },
+            {
+              "name": "image_url",
+              "field": "image_url",
+              "op": "contains",
+              "type": "image_url",
+              "relationType": null
+            },
+            {
+              "name": "anime",
+              "field": "anime",
+              "op": "eq",
+              "type": "integer",
+              "relationType": "Anime"
+            },
+            {
+              "name": "personality",
+              "field": "personality",
+              "op": "eq",
+              "type": "integer",
+              "relationType": "Personality"
+            },
+            {
+              "name": "owner_id",
+              "field": "owner_id",
+              "op": "eq",
+              "type": "integer",
+              "relationType": null
+            }
+          ]
+        },
+        {
+          "method": "GET",
+          "path": "/characters/:id",
+          "permissions": "public"
+        },
+        {
+          "method": "POST",
+          "path": "/characters",
+          "permissions": "user"
+        },
+        {
+          "method": "PATCH",
+          "path": "/characters/:id",
+          "permissions": "owner"
+        },
+        {
+          "method": "DELETE",
+          "path": "/characters/:id",
+          "permissions": "owner"
+        }
+      ]
+    }
+  ]
+}
