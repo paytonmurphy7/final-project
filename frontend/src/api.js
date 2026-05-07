@@ -1,7 +1,7 @@
 import { getToken } from "./tokenStorage.js";
 
 export function getApiBaseUrl() {
-  return import.meta.env.VITE_API_BASE_URL;
+  return "https://final-project-backend.onrender.com";
 }
 
 export async function sendRequest(path, options = {}) {
@@ -36,11 +36,7 @@ export async function sendRequest(path, options = {}) {
   return response.json();
 }
 
-// TODO: Add your own endpoint functions below.
-// Example:
-// export function getItems() {
-//   return sendRequest("/api/items");
-// }
+// Character endpoints
 export function getCharacters() {
   return sendRequest("/characters", { method: "GET" });
 }
@@ -65,6 +61,7 @@ export function deleteCharacter(id) {
   });
 }
 
+// Anime + Personality endpoints
 export function getAnime() {
   return sendRequest("/animes", { method: "GET" });
 }
